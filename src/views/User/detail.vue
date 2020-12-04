@@ -1,15 +1,15 @@
 <template>
-  <div class="dashboard">
-    111
+  <div class="detail">
+    详细
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Dashboard',
+  
   data() {
     return {
-
+      
     }
   },
   mounted() {

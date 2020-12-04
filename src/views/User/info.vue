@@ -1,12 +1,11 @@
 <template>
-  <div class="dashboard">
-    111
+  <div class="info">
+    用户信息
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Dashboard',
   data() {
     return {
 
@@ -15,12 +14,10 @@ export default {
   mounted() {
     document.title = this.$route.meta.title
   },
-  methods: {
-
-  }
+  methods: {}
 }
 </script>
 
-<style lang="scss" scoped>
+<style>
 
 </style>

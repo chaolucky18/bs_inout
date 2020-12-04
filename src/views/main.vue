@@ -10,44 +10,30 @@
     </el-header>
     <!-- 侧边栏 -->
     <el-container>
-      <el-aside :width="isCollapse ? '64px' : '200px'">
-        <div class="toggle-button" @click="toggleCollapse">|||</div>
+      <el-aside width="200px">
         <!-- 侧边栏菜单区域 -->
         <el-menu
           :unique-opened="true"
-          background-color="#333744"
-          text-color="#fff"
-          active-text-color="#409efe"
-          :collapse="isCollapse"
-          :collapse-transition="false"
+          default-active="Dashboard"
           :router="true"
-          :default-active="navPath"
         >
-          <div :key="item.path" v-for="item in routes">
+          <div v-for="item in routes" :key="item.name">
             <el-submenu v-if="item.children != undefined" :index="item.path">
               <template slot="title">
-                <i :class="iconsObj[item.meta.id]"></i>
-                <span>{{ item.meta.title }}</span>
+                <i class="el-icon-location"></i>
+                <span slot="title">{{ item.meta.title }}</span>
               </template>
-
               <el-menu-item
                 v-for="subItem in item.children"
+                :key="subItem.name"
                 :index="subItem.path"
-                :key="subItem.path"
-                @click="saveNavState(subItem.path)"
               >
-                <template slot="title">
-                  <i class="el-icon-menu"></i>
-                  <span>{{ subItem.meta.title }}</span>
-                </template>
+                <span>{{ subItem.meta.title }}</span>
               </el-menu-item>
             </el-submenu>
-
-            <el-menu-item v-else @click="saveNavState(item.path)">
-              <template slot="title">
-                <i :class="iconsObj[item.meta.id]"></i>
-                <span>{{ item.meta.title }}</span>
-              </template>
+            <el-menu-item v-else :index="item.path">
+              <i class="el-icon-menu"></i>
+              <span slot="title">{{ item.meta.title }}</span>
             </el-menu-item>
           </div>
         </el-menu>
@@ -75,9 +61,7 @@ export default {
       navPath: "",
     };
   },
-  created() {
-    this.navPath = window.sessionStorage.getItem("navPath");
-  },
+  created() {},
   computed: {
     // 左侧菜单：数据来源于router
     routes() {
@@ -89,21 +73,14 @@ export default {
       window.sessionStorage.clear();
       this.$router.push("/login");
     },
-    // 点击按钮切换展开与折叠
-    toggleCollapse() {
-      this.isCollapse = !this.isCollapse;
-      console.log(this.routes);
-    },
-    saveNavState(nav) {
-      this.navPath = nav;
-      this.$router.push(nav)
-      window.sessionStorage.setItem("navPath", nav);
+    onSelect(d) {
+      console.log(d);
     },
   },
 };
 </script>
 
-<style lang="css" scoped>
+<style lang="scss" scoped>
 .iconfont {
   margin-right: 10px;
 }
@@ -111,44 +88,52 @@ export default {
   height: 100%;
 }
 .el-header {
-  background-color: #373d41;
+  // background-color: #373d41;
+  background-color: #455a64;
   display: flex;
   justify-content: space-between;
   padding-left: 0;
   align-items: center;
   color: #fff;
   font-size: 20px;
-}
-.el-header div {
-  display: flex;
-  align-items: center;
-}
-.el-header div span {
-  margin-left: 15px;
-}
-.el-header div img {
-  margin-left: 30px;
-  margin-right: 10px;
-  width: 50px;
+
+  div {
+    display: flex;
+    align-items: center;
+
+    span {
+      margin-left: 15px;
+    }
+  }
 }
 .el-aside {
-  background-color: #333744;
+  background-color: #90a4ae;
   height: 100%;
+
+  .el-menu {
+    // background-color:#cfd8dc;
+    box-sizing: border-box;
+
+    .el-submenu {
+      text-align: left;
+
+      .el-menu {
+        &-item {
+          padding-left: 45px !important; 
+          padding-right: 10px !important;
+        }
+      }
+    }
+
+    &-item {
+      text-align: left;
+      padding-left: 20px !important;
+    }
+  }
 }
-.el-menu {
-  border-right: none;
-}
+
 .el-main {
   background-color: #eaedf1;
-}
-.toggle-button {
-  background-color: #4a5064;
-  font-size: 10px;
-  line-height: 24px;
-  color: #fff;
-  text-align: center;
-  letter-spacing: 0.2em;
-  cursor: pointer;
 }
 .home-container {
   height: 100%;

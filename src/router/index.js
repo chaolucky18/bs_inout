@@ -30,16 +30,25 @@ const routes = [
           id: 125,
           title: '用户'
         },
-        redirect: '/user/index',
+        redirect: '/user/info',
+        component: resolve => { require(['@/views/User'], resolve) },
         children: [
           {
-            path: '/user/index',
-            name: 'UserIndex',
+            path: '/user/info',
+            name: 'UserInfo',
             meta: {
               id: 125,
               title: '用户信息'
             },
-            component: resolve => { require(['@/views/User'], resolve) }
+            component: resolve => { require(['@/views/User/info'], resolve) }
+          },
+          {
+            path: '/user/detail/',
+            name: 'UserDetail',
+            meta: {
+              title: '用户详细信息'
+            },
+            component: resolve => { require(['@/views/User/detail'], resolve) }
           }
         ]
       },

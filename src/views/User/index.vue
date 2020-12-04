@@ -1,6 +1,6 @@
 <template>
   <div class="user">
-    用户信息
+    <router-view></router-view>
   </div>
 </template>
 
