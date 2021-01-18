@@ -1,5 +1,5 @@
 <template>
-  <el-container>
+  <el-container  class="height100">
     <!-- 头部区域 -->
     <el-header>
       <div>
@@ -10,7 +10,7 @@
     </el-header>
     <!-- 侧边栏 -->
     <el-container>
-      <el-aside width="200px">
+      <el-aside class="height100" width="200px">
         <!-- 侧边栏菜单区域 -->
         <el-menu
           :unique-opened="true"
@@ -84,7 +84,7 @@ export default {
 .iconfont {
   margin-right: 10px;
 }
-.el-container {
+.height100 {
   height: 100%;
 }
 .el-header {

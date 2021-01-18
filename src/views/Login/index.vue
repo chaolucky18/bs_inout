@@ -10,26 +10,27 @@
         :rules="rules"
         label-width="0px"
         class="login_form"
+        @keyup.enter="submit"
       >
         <!-- 用户名 -->
         <el-form-item prop="username">
           <el-input
-            @focus="handleClickBlur(true)"
-            @blur="handleClickBlur(false)"
+            @focus="/*handleClickBlur(true)*/"
+            @blur="/*handleClickBlur(false)*/"
             placeholder="请输入账号"
             prefix-icon="iconfont icon-user"
             v-model="loginForm.username"
           ></el-input>
         </el-form-item>
         <!-- 密码 -->
-        <el-form-item prop="password">
+        <el-form-item prop="passwd">
           <el-input
-            @focus="handleClickBlur(true)"
-            @blur="handleClickBlur(false)"
+            @focus="/*handleClickBlur(true)*/"
+            @blur="/*handleClickBlur(false)*/"
             type="password"
             placeholder="请输入密码"
             prefix-icon="iconfont icon-3702mima"
-            v-model="loginForm.password"
+            v-model="loginForm.passwd"
           ></el-input>
         </el-form-item>
         <!-- 按钮 -->
@@ -50,7 +51,7 @@ export default {
       // 这是登陆表单的数据绑定对象
       loginForm: {
         username: "admin",
-        password: "123456",
+        passwd: "123456789",
       },
       rules: {
         username: [
@@ -62,7 +63,7 @@ export default {
             trigger: "blur",
           },
         ],
-        password: [
+        passwd: [
           { required: true, message: "请输入密码", trigger: "blur" },
           {
             min: 6,
@@ -72,7 +73,7 @@ export default {
           },
         ],
       },
-      isBackCss: false,
+      isBackCss: true, // 背景模糊控制
     };
   },
   methods: {
@@ -84,14 +85,19 @@ export default {
           .then("", (err) => {
             this.$message.error("网络或服务器出错 " + err);
           });
-        if (res.meta.status != 200) {
-          this.$message.error(res.meta.msg);
-          return false;
+        // 登陆出错
+        if(res.flag == 0) {
+          if(res.msg == "数据为空") {
+            this.$message.error('用户名或密码错误！')
+            return
+          }
+          this.$message.error(res.msg)
+          return
         }
+
         this.$message.success("登陆成功");
-        console.log(res.data.token);
-        // 将token写入至sessionStorage
-        window.sessionStorage.setItem("token", res.data.token);
+        // 将用户名写入至sessionStorage
+        window.sessionStorage.setItem("token", res.data.username);
         // 页面跳转
         this.$router.push("/home");
       });
@@ -104,13 +110,12 @@ export default {
     },
   },
   mounted() {
-    console.log(this.$refs);
   },
 };
 </script>
 
 <style lang="scss" scoped>
-$url: 'http://47.103.144.215:2020/showtoday';
+$url: "http://47.103.144.215:2020/showtoday";
 
 .background_css {
   filter: blur(8px) brightness(0.6) !important;

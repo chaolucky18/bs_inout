@@ -74,4 +74,24 @@ const router = new VueRouter({
   routes
 })
 
+
+/**
+ * 登陆检测，若未登陆，则跳转至登陆界面
+ */
+router.beforeEach((to, from, next) => {
+  // to:将要访问的
+  // from:从哪个路径跳转而来 
+  // next() 函数，表示放行, 参数中页面地址时，则强制跳转到指定页面。
+
+  if (to.path === '/login') { return next() }
+  else {
+    // 获取token，如果没有token,则跳转至登陆页面
+    const tokenStr = window.sessionStorage.getItem('token')
+    if (!tokenStr) { return next('/login') }
+    else { next() }
+  }
+
+
+})
+
 export default router

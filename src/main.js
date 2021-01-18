@@ -6,6 +6,7 @@ import store from './store'
 // 三方库配置
 import '@/settings/elementui'
 import '@/settings/axios'
+// import '@/settings/echarts'
 
 // CSS
 // ElementUI
@@ -16,6 +17,7 @@ import '@/assets/css/global.css'
 import '@/assets/fonts/iconfont.css'
 
 Vue.config.productionTip = false
+// console.log('Vue Version:',Vue.version)
 
 new Vue({
   router,
