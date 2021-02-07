@@ -94,10 +94,10 @@ export default {
           this.$message.error(res.msg)
           return
         }
-
         this.$message.success("登陆成功");
         // 将用户名写入至sessionStorage
-        window.sessionStorage.setItem("token", res.data.username);
+        window.sessionStorage.setItem("token", res.data[0].username);
+        window.sessionStorage.setItem("guardId", res.data[0].id);
         // 页面跳转
         this.$router.push("/home");
       });
@@ -152,6 +152,7 @@ $url: "http://47.103.144.215:2020/showtoday";
       height: 100px;
       line-height: 100px;
       user-select: none;
+      text-align: center;
     }
   }
   .login_form {

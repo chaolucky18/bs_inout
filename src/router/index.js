@@ -18,17 +18,26 @@ const routes = [
         path: '/dashboard',
         name: 'Dashboard',
         meta: {
-          id: 125,
+          id: 101,
           title: '仪表盘',
         },
         component: resolve => { require(['@/views/Dashboard'], resolve) }
+      },
+      {
+        path: '/control',
+        name: 'Control',
+        meta: {
+          id: 150,
+          title: '进出管理',
+        },
+        component: resolve => { require(['@/views/Control'], resolve) }
       },
       {
         path: '/user',
         name: 'User',
         meta: {
           id: 125,
-          title: '用户'
+          title: '居民'
         },
         redirect: '/user/info',
         component: resolve => { require(['@/views/User'], resolve) },
@@ -38,7 +47,7 @@ const routes = [
             name: 'UserInfo',
             meta: {
               id: 125,
-              title: '用户信息'
+              title: '居民信息'
             },
             component: resolve => { require(['@/views/User/info'], resolve) }
           },
@@ -46,9 +55,37 @@ const routes = [
             path: '/user/detail/',
             name: 'UserDetail',
             meta: {
-              title: '用户详细信息'
+              title: '居民进出数据'
             },
             component: resolve => { require(['@/views/User/detail'], resolve) }
+          },
+          {
+            path: '/user/newuser/',
+            name: 'NewUser',
+            meta: {
+              title: '新增居民'
+            },
+            component: resolve => { require(['@/views/User/new'], resolve)}
+          }
+        ]
+      },
+      {
+        path: '/guard',
+        name: 'Guard',
+        meta: {
+          id: 145,
+          title: '门卫'
+        },
+        redirect: '/guard/overall',
+        component: resolve => { require(['@/views/Guard'], resolve) },
+        children: [
+          {
+            path: '/guard/overall',
+            name: 'GuardOverall',
+            meta: {
+              title: '门卫总览'
+            },
+            component: resolve => { require(['@/views/Guard/overall'], resolve)}
           }
         ]
       },
@@ -56,7 +93,7 @@ const routes = [
         path: '/about',
         name: 'About',
         meta: {
-          id: 145,
+          id: 102,
           title: '关于'
         },
         component: resolve => { require(['@/views/About'], resolve) }

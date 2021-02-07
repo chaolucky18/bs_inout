@@ -13,14 +13,14 @@
       <el-aside class="height100" width="200px">
         <!-- 侧边栏菜单区域 -->
         <el-menu
-          :unique-opened="true"
+          :unique-opened="false"
           default-active="Dashboard"
           :router="true"
         >
           <div v-for="item in routes" :key="item.name">
             <el-submenu v-if="item.children != undefined" :index="item.path">
               <template slot="title">
-                <i class="el-icon-location"></i>
+                <i :class="iconsObj[item.meta.id]"></i>
                 <span slot="title">{{ item.meta.title }}</span>
               </template>
               <el-menu-item
@@ -32,7 +32,7 @@
               </el-menu-item>
             </el-submenu>
             <el-menu-item v-else :index="item.path">
-              <i class="el-icon-menu"></i>
+              <i :class="iconsObj[item.meta.id]"></i>
               <span slot="title">{{ item.meta.title }}</span>
             </el-menu-item>
           </div>
@@ -51,11 +51,12 @@ export default {
   data() {
     return {
       iconsObj: {
-        125: "iconfont icon-user",
-        103: "iconfont icon-tijikongjian",
-        101: "iconfont icon-shangpin",
-        102: "iconfont icon-danju",
-        145: "iconfont icon-baobiao",
+        125: "el-icon-user-solid",
+        103: "el-icon-location",
+        101: "el-icon-s-data",
+        102: "el-icon-info",
+        145: "el-icon-s-custom",
+        150: "el-icon-s-claim"
       },
       isCollapse: false,
       navPath: "",
@@ -72,10 +73,7 @@ export default {
     logout() {
       window.sessionStorage.clear();
       this.$router.push("/login");
-    },
-    onSelect(d) {
-      console.log(d);
-    },
+    }
   },
 };
 </script>

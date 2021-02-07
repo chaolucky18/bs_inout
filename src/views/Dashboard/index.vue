@@ -20,22 +20,76 @@
     </div>
     <div class="info">
       <h4>最近进出人员</h4>
-      <el-table :data="tableData" style="width: 100%" stripe>
-        <el-table-column prop="date" label="日期" width="180">
-        </el-table-column>
-        <el-table-column prop="name" label="姓名" width="180">
-        </el-table-column>
-        <el-table-column prop="address" label="地址"> </el-table-column>
+      <el-table :data="inOutData" style="width: 100%" stripe>
+        <el-table-column prop="time" label="时间" width="120"></el-table-column>
+        <el-table-column prop="name" label="姓名" width="120"></el-table-column>
+        <el-table-column
+          prop="temperature"
+          label="体温"
+          width="80"
+        ></el-table-column>
+        <el-table-column prop="door" label="大门" width="80"></el-table-column>
+        <el-table-column
+          prop="building"
+          label="楼栋"
+          width="80"
+        ></el-table-column>
+        <el-table-column prop="unit" label="单元" width="80"></el-table-column>
+        <el-table-column prop="room" label="门号" width="80"></el-table-column>
+        <el-table-column prop="phone" label="手机号" width=""></el-table-column>
+        <el-table-column prop="in" label="动作" width="">
+          <template slot-scope="scope">
+            <el-tag
+              :type="scope.row.in == '1' ? 'danger' : 'success'"
+              disable-transitions
+              >{{ scope.row.in == "1" ? "进" : "出" }}</el-tag
+            >
+          </template></el-table-column
+        >
       </el-table>
     </div>
     <div class="info">
       <h4>体温异常人员</h4>
-      <el-table :data="tableData" style="width: 100%" stripe>
-        <el-table-column prop="date" label="日期" width="180">
-        </el-table-column>
-        <el-table-column prop="name" label="姓名" width="180">
-        </el-table-column>
-        <el-table-column prop="address" label="地址"> </el-table-column>
+      <el-table :data="warnData" style="width: 100%" stripe>
+        <el-table-column prop="time" label="时间" width="120"></el-table-column>
+        <el-table-column prop="name" label="姓名" width="120"></el-table-column>
+        <el-table-column
+          prop="temperature"
+          label="体温"
+          width="80"
+        ></el-table-column>
+        <el-table-column prop="door" label="大门" width="80"></el-table-column>
+        <el-table-column
+          prop="building"
+          label="楼栋"
+          width="80"
+        ></el-table-column>
+        <el-table-column prop="unit" label="单元" width="80"></el-table-column>
+        <el-table-column prop="room" label="门号" width="80"></el-table-column>
+        <el-table-column prop="phone" label="手机号" width=""></el-table-column>
+      </el-table>
+    </div>
+    <div class="info">
+      <h4>最近外来人员</h4>
+      <el-table :data="strangeData" style="width: 100%" stripe>
+        <el-table-column prop="time" label="时间" width="100"></el-table-column>
+        <el-table-column prop="name" label="姓名" width="120"></el-table-column>
+        <el-table-column
+          prop="temperature"
+          label="体温"
+          width="90"
+        ></el-table-column>
+        <el-table-column
+          prop="resname"
+          label="访问人"
+          width="120"
+        ></el-table-column>
+        <el-table-column
+          prop="guardname"
+          label="门卫"
+          width="120"
+        ></el-table-column>
+        <el-table-column prop="phone" label="手机号" width=""></el-table-column>
       </el-table>
     </div>
   </div>
@@ -46,40 +100,35 @@ export default {
   name: "Dashboard",
   data() {
     return {
-      dashData: {
-        out: 152,
-        in: 126,
-        warn: 5,
-        strange: 65
-      },
-      tableData: [
-        {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄",
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1517 弄",
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1519 弄",
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1516 弄",
-        },
-      ],
+      dashData: {},
+      inOutData: [],
+      warnData: [],
+      strangeData: [],
     };
   },
   mounted() {
     document.title = this.$route.meta.title;
+    this.getDashData();
+    // 实时刷新数据
+    setInterval(() => {
+      this.getDashData();
+    }, 10000);
   },
-  methods: {},
+  methods: {
+    async getDashData() {
+      let { data: res } = await this.$http.get("/dashboard").then("", (err) => {
+        this.$message.error("网络或服务器出错 " + err);
+      });
+      if (res.flag != 0) {
+        this.$message.error(res.msg);
+        return;
+      }
+      this.dashData = res.data.overall;
+      this.inOutData = res.data.recentInOut;
+      this.warnData = res.data.recentWarn;
+      this.strangeData = res.data.recentStrange;
+    },
+  },
 };
 </script>
 
@@ -132,11 +181,11 @@ export default {
       &-title {
         height: 40%;
         color: white;
-        font-size: 28px;
+        font-size: 26px;
         @include center;
       }
       &-data {
-        font-size: 26px;
+        font-size: 24px;
         @include center;
         color: #1f1f1f;
       }
@@ -148,17 +197,19 @@ export default {
     overflow: hidden;
     border-radius: 10px;
     padding-bottom: 20px;
-    
+    min-width: 848px;
+
     h4 {
       line-height: 100%;
       margin: 20px 0 0px;
       font-size: 20px;
+      text-align: center;
     }
     .el-table {
       padding: 0 20px;
 
       &::before {
-        content: '';
+        content: "";
         height: 0;
       }
     }
