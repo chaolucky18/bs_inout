@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import '../../assets/css/editor.css'
+import "../../assets/css/editor.scss";
 
 export default {
   data() {
@@ -100,6 +100,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+// @import url('../../assets/css/editor.scss');
 .news {
   margin: 25px auto;
   background-color: #fff;
@@ -179,3 +180,5 @@ export default {
   }
 }
 </style>
+
+<style src="../../assets/css/editor.scss" lang="scss"></style>
