@@ -29,7 +29,7 @@
               <span style="margin-left: 10px">{{ newsCtt.author }}</span>
             </p>
           </div>
-          <div class="c_ctt">{{ newsCtt.text }}</div>
+          <div v-html="newsCtt.text" class="c_ctt"></div>
         </div>
       </el-col>
     </el-row>
@@ -37,6 +37,8 @@
 </template>
 
 <script>
+import '../../assets/css/editor.css'
+
 export default {
   data() {
     return {

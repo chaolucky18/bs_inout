@@ -65,7 +65,7 @@ const routes = [
             meta: {
               title: '新增居民'
             },
-            component: resolve => { require(['@/views/User/new'], resolve)}
+            component: resolve => { require(['@/views/User/new'], resolve) }
           }
         ]
       },
@@ -85,7 +85,7 @@ const routes = [
             meta: {
               title: '门卫总览'
             },
-            component: resolve => { require(['@/views/Guard/overall'], resolve)}
+            component: resolve => { require(['@/views/Guard/overall'], resolve) }
           }
         ]
       },
@@ -105,7 +105,16 @@ const routes = [
           id: 151,
           title: '公告信息'
         },
-        component: resolve => { require(['@/views/News/index.vue'], resolve)}
+        component: resolve => { require(['@/views/News/index.vue'], resolve) }
+      },
+      {
+        path: '/newNews',
+        name: 'newNews',
+        meta: {
+          id: 151,
+          title: '发布信息'
+        },
+        component: resolve => { require(['@/views/News/new.vue'], resolve) }
       }
     ]
   },
@@ -113,6 +122,15 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: resolve => { require(['@/views/Login'], resolve) }
+  },
+  {
+    path: '/seenews',
+    name: 'News',
+    meta: {
+      id: 151,
+      title: '公告信息'
+    },
+    component: resolve => { require(['@/views/News/index.vue'], resolve) }
   }
 ]
 
@@ -128,15 +146,19 @@ router.beforeEach((to, from, next) => {
   // to:将要访问的
   // from:从哪个路径跳转而来 
   // next() 函数，表示放行, 参数中页面地址时，则强制跳转到指定页面。
-
-  if (to.path === '/login') { return next() }
+console.log(to.path)
+  if (to.path === '/login' || to.path === '/seenews') { return next() }
   else {
     // 获取token，如果没有token,则跳转至登陆页面
     const tokenStr = window.sessionStorage.getItem('token')
-    if (!tokenStr) { return next('/login') }
+    if (!tokenStr) {
+      if(to.path !== '/dashboard') { 
+        alert('暂无权限访问！请先登录！')
+      } 
+      return next('/login') 
+    }
     else { next() }
   }
-
 
 })
 
