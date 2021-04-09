@@ -116,6 +116,7 @@ export default {
 
 <style lang="scss" scoped>
 $url: "http://47.103.144.215:2020/showtoday";
+$src: "../../assets/th.jpg";
 
 .background_css {
   filter: blur(8px) brightness(0.6) !important;
@@ -131,7 +132,7 @@ $url: "http://47.103.144.215:2020/showtoday";
     z-index: -1;
     height: 100%;
     width: 100%;
-    background-image: url($url);
+    background-image: url($src);
     background-position: center center;
     background-size: cover;
     filter: blur(0px) brightness(0.95);

@@ -56,7 +56,8 @@ export default {
         101: "el-icon-s-data",
         102: "el-icon-info",
         145: "el-icon-s-custom",
-        150: "el-icon-s-claim"
+        150: "el-icon-s-claim",
+        151: "el-icon-s-comment"
       },
       isCollapse: false,
       navPath: "",

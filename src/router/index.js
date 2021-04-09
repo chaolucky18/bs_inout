@@ -89,14 +89,23 @@ const routes = [
           }
         ]
       },
+      // {
+      //   path: '/about',
+      //   name: 'About',
+      //   meta: {
+      //     id: 102,
+      //     title: '关于'
+      //   },
+      //   component: resolve => { require(['@/views/About'], resolve)}
+      // },
       {
-        path: '/about',
-        name: 'About',
+        path: '/news',
+        name: 'News',
         meta: {
-          id: 102,
-          title: '关于'
+          id: 151,
+          title: '公告信息'
         },
-        component: resolve => { require(['@/views/About'], resolve) }
+        component: resolve => { require(['@/views/News/index.vue'], resolve)}
       }
     ]
   },

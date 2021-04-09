@@ -119,7 +119,7 @@ export default {
       let { data: res } = await this.$http.get("/dashboard").then("", (err) => {
         this.$message.error("网络或服务器出错 " + err);
       });
-      if (res.flag != 0) {
+      if (res.flag == 0) {
         this.$message.error(res.msg);
         return;
       }
