@@ -4,6 +4,8 @@ function resolve(dir) {
 }
 
 module.exports = {
+  // 部署应用时的根路径(默认'/'),也可用相对路径(存在使用限制)
+  publicPath: process.env.NODE_ENV === 'production' ? './' : '/',
   // 运行时生成的生产环境构建文件的目录(默认''dist''，构建之前会被清除)
   outputDir: 'dist',
   //指定生成的 index.html 的输出路径(相对于 outputDir)也可以是一个绝对路径。
