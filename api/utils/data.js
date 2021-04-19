@@ -109,6 +109,7 @@ app.get('/dashboard', async (req, res) => {
     recentWarn: datas.warnRows == [] ? {} : datas.warnRows,
     recentStrange: datas.strangeRows
   }
+  dat.flag = 1
   res.json(dat)
 })
 
